@@ -1,7 +1,7 @@
 from datetime import datetime
 
 def match_fixing():
-    ipl_teams = ["Royal Challengers Banglore","Chennai Super Kings","Mumbai Indians","Kolkata Night Riders","Sunrisers Hydrabad","Delhi Capitals","Rajasthan Royals","Kings XI Punjab"]
+    ipl_teams = ["Royal Challengers Banglore","Chennai Super Kings","Mumbai Indians","Kolkata Knight Riders","Sunrisers Hydrabad","Delhi Capitals","Rajasthan Royals","Kings XI Punjab"]
     ipl_grounds = ["Banglore","Chennai","Mumbai","Kolkata","Hyderabad","Delhi","Jaipur","Punjab"]
 
     match1 = []
