@@ -1,4 +1,3 @@
-#import pandas
 from datetime import datetime
 
 def match_fixing():
@@ -69,17 +68,17 @@ def match_fixing():
             pass
     day1_swap = even+odd
     day1 += day1_swap
-    # print(day1)
+   # print(day1)
 
     day2 = []
     day2 += match2
     day2 += match2_swap
-    # print(day2)
+  #  print(day2)
 
     day3 = []
     day3 += match3
     day3 += match3_swap
-    # print(day3)
+   # print(day3)
 
     day4 = []
     even = []
@@ -108,7 +107,7 @@ def match_fixing():
     day4_swap = even+odd
     day4 += day4_swap
     
-    # print(day4)
+   # print(day4)
 
     day5 = []
     even = []
@@ -136,7 +135,7 @@ def match_fixing():
             pass
     day5_swap = even+odd
     day5 += day5_swap
-    # print(day5)
+   # print(day5)
 
     day6 = []
     even = []
@@ -165,14 +164,27 @@ def match_fixing():
     day6_swap = even+odd
 
     day6 += day6_swap
-    # print(day6)
+   # print(day6)
 
     final_match = []
-    final_match += [day1,day2,day3,day4,day5,day6]
+    final_match += day1
+    final_match += day2
+    final_match += day3
+    final_match += day4
+    final_match += day5
+    final_match += day6
+    temp = final_match[-6]
+    final_match[-6] = final_match[-5]
+    final_match[-5] = temp
+    #print("final",final_match)
+    #print(final_match[-6],final_match[-7])
+    #print(len(final_match),final_match[-1])
+    #final_match[-6],final_match[-5] = final_match[-5],final_match[-6]
     return final_match
 
 def scoreborad():
     matches = match_fixing()
+    #print(matches)
     print("Total Matches ",56)
 
     days = ["Sunday","Monday","Tuesday","Wednesday","Thrusday","Friday","Saturday"]
@@ -190,9 +202,9 @@ def scoreborad():
     cur = days.index(curr)
     ans = days.index(curr)
 
-    for i in range(0,len(matches)):
-        j = 0
-        while j<len(matches[i]):
+    j = 0
+    while j<len(matches):
+        try:
             Date = str(current_date)+"/"+str(current_month)+"/"+str(current_year)
             current_date += 1
             if (current_date>31):
@@ -201,26 +213,53 @@ def scoreborad():
             if (current_month>12):
                 current_year += 1
                 current_month = 1
-            if (cur>=7):
+            if (cur>6):
                 cur = 0
                 current_day = "Sunday"
             if (days[cur] == "Sunday"):
                 print("-"*30)
-                TeamA = matches[i][j][0]
-                TeamB = matches[i][j][1]
+                TeamA = matches[j][0]
+                TeamB = matches[j][1]
                 Days = (days[cur])
                 Time = (times[0])
-                Ground = matches[i][j][2]
+                Ground = matches[j][2]
                 print("Date: ",Date)
                 print("Day ",Days)
                 print("Teams ",TeamA+" VS "+TeamB)
                 print("Ground ",Ground)
                 print("Time ",Time)
                 print("\n")
-                TeamA = matches[i][j+1][0]
-                TeamB = matches[i][j+1][1]
+                TeamA = matches[j+1][0]
+                TeamB = matches[j+1][1]
                 Days = (days[cur])
-                Ground = (matches[i][j+1][2])
+                Ground = (matches[j+1][2])
+                Time = (times[1])
+                print("Date ",Date)
+                print("Day ",Days)
+                print("Teams ",TeamA+" VS "+TeamB)
+                print("Ground ",Ground)
+                print("Time ",Time)
+                print("-"*30)
+                cur += 1
+                j += 2
+            if days[cur] == "Saturday":
+                TeamA = matches[j][0]
+                TeamB = matches[j][1]
+                Days = (days[cur])
+                Ground = (matches[j][2])
+                Time = (times[0])
+                print("-"*30)
+                print("Date ",Date)
+                print("Day ",Days)
+                print("Teams ",TeamA+" VS "+TeamB)
+                print("Ground ",Ground)
+                print("Time ",Time)
+                print("-"*30)
+                print("\n")
+                TeamA = matches[j+1][0]
+                TeamB = matches[j+1][1]
+                Days = (days[cur])
+                Ground = (matches[j+1][2])
                 Time = (times[1])
                 print("Date ",Date)
                 print("Day ",Days)
@@ -232,17 +271,22 @@ def scoreborad():
                 j += 2
             else:
                 Days = (days[cur])
-                TeamA = matches[i][j][0]
-                TeamB = matches[i][j][1]
-                Time = (times[-1])
-                Ground = (matches[i][j][2].replace(",","|"))
-                print("-"*30)
-                print("Date ",Date)
-                print("Day ",Days)
-                print("Teams ",TeamA+" VS "+TeamB)
-                print("Ground ",Ground)
-                print("Time ",Time)
+                if (Days == "Wednesday"):
+                    #print(type(Days))
+                    pass
+                else:
+                    TeamA = matches[j][0]
+                    TeamB = matches[j][1]
+                    Time = (times[-1])
+                    Ground = (matches[j][2])
+                    print("-"*30)
+                    print("Date ",Date)
+                    print("Day ",Days)
+                    print("Teams ",TeamA+" VS "+TeamB)
+                    print("Ground ",Ground)
+                    print("Time ",Time)
+                    j += 1
                 cur += 1
-                j += 1
-
+        except:
+            j += 1
 scoreborad()
