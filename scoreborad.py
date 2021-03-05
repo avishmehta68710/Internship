@@ -474,7 +474,7 @@ def scoreborad():
                 # print(len(satu))
                 # print("finaks",final_match[index_final],final_match[index_final-1])
                 while k<len(saturday):
-                    print(fins)
+                #    print(fins)
                     if saturday[k][0] != fins[-1][0] and saturday[k][1] != fins[-1][1] and saturday[k][0] != fins[-1][1] and saturday[k][1] != fins[-1][0]:
                         TeamA = saturday[k][0]
                         TeamB = saturday[k][1]
