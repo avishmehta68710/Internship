@@ -37,6 +37,7 @@ count = 0
 for i in range(0,len(ipl_teams)):
     try:
         
+        match7.append([ipl_teams[i],ipl_teams[i+1],ipl_grounds[i]])
         match2.append([ipl_teams[i],ipl_teams[i+2],ipl_grounds[i]])
         match1.append([ipl_teams[i],ipl_teams[i+3],ipl_grounds[i]])
         match3.append([ipl_teams[i],ipl_teams[i+4],ipl_grounds[i]])
@@ -51,6 +52,7 @@ for i in range(0,len(ipl_teams)):
 
 for i in range(0,len(ipl_teams)):
     try:
+        match7_swap.append([ipl_teams[i],ipl_teams[i+1],ipl_grounds[ipl_teams.index(ipl_teams[i+1])]])
         match1_swap.append([ipl_teams[i],ipl_teams[i+2],ipl_grounds[ipl_teams.index(ipl_teams[i+2])]])
         match2_swap.append([ipl_teams[i],ipl_teams[i+3],ipl_grounds[ipl_teams.index(ipl_teams[i+3])]])
         match3_swap.append([ipl_teams[i],ipl_teams[i+4],ipl_grounds[ipl_teams.index(ipl_teams[i+4])]])
@@ -66,6 +68,8 @@ day1 += match1
 day1 += match1_swap
 
 
+
+
 day2 = []
 day2 += match2
 day2 += match2_swap
@@ -74,6 +78,7 @@ day2 += match2_swap
 day3 = []
 day3 += match3
 day3 += match3_swap
+
 
 day4 = []
 even = []
@@ -130,9 +135,28 @@ for i in range(len(match5_swap)):
 day5_swap = even+odd
 day5 += day5_swap
 
+
+
 day6 = []
 day6 += match6
 day6 += match6_swap
+
+day7 = []
+i = 0
+while i<len(ipl_teams):
+    if (i%2 == 0):
+        day7.append([ipl_teams[i],ipl_teams[i+1],ipl_grounds[i]])
+    i += 2
+
+j = 0
+day7_swap = []
+while j<len(ipl_teams):
+    day7_swap.append([ipl_teams[j],ipl_teams[j+1],ipl_grounds[ipl_teams.index(ipl_teams[j+1])]])
+    j += 2
+day7 += day7_swap
+day7 += day7
+
+
 
 final_match = []
 final_match += day1[:2]
@@ -144,13 +168,15 @@ final_match += day2[-2:]
 final_match += day3
 final_match += day4
 final_match += day5
+final_match += day7
+
 
 
 def scoreborad():
     print("Total Matches ",56)
 
     days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-    times = ["2:00","7:00"]  
+    times = ["2:00","7:00"]
     current_day = "Monday"
     current_month = 3
     current_date = 1
@@ -169,9 +195,12 @@ def scoreborad():
     dates = list(range(1,32))
     dates_index = 0
     while True:
-        if (len(final_match) == 0 or dates_index>=31):
+        if (len(final_match) == 0):
             break
         try:
+            if dates_index>=30:
+                dates_index = 0
+                current_month += 1
             if (current_month>12):
                 current_year += 1
                 current_month = 1
@@ -180,29 +209,29 @@ def scoreborad():
                 current_day = "Sunday"
             if (days[cur] == "Sunday"):
                 k = 0
-                while k<len(sunday):
-                    if sunday[k][0] != satu[-1][0] and sunday[k][0] != satu[-1][1] and sunday[k][1] != satu[-1][0] and sunday[k][1] != satu[-1][1] and sunday[k][0] != satu[-2][0] and sunday[k][0] != satu[-2][1] and sunday[k][1] != satu[-1][0] and sunday[k][1] != satu[-1][1]:
-                        TeamA = sunday[k][0]
-                        TeamB = sunday[k][1]
+                while k<len(final_match):
+                    if final_match[k][0] != satu[-1][0] and final_match[k][0] != satu[-1][1] and final_match[k][1] != satu[-1][0] and final_match[k][1] != satu[-1][1] and final_match[k][0] != satu[-2][0] and final_match[k][0] != satu[-2][1] and final_match[k][1] != satu[-1][0] and final_match[k][1] != satu[-1][1]:
+                        TeamA = final_match[k][0]
+                        TeamB = final_match[k][1]
                         print("-"*30)
-                        print("Team A VS TeamB",sunday[k][0]," VS ",sunday[k][1])
-                        print("Ground ",sunday[k][2])
+                        print("Team A VS TeamB",final_match[k][0]," VS ",final_match[k][1])
+                        print("Ground ",final_match[k][2])
                         print("Time ",times[0])
-                        sun.append([sunday[k][0],sunday[k][1],sunday[k][2]])
-                        sunday.remove(sunday[k])
+                        sun.append([final_match[k][0],final_match[k][1],final_match[k][2]])
+                        final_match.remove(final_match[k])
                         break
                     k += 1
                 print("Date ",str(dates[dates_index])+"/"+str(current_month)+"/"+str(current_year))
                 print("Day ",days[cur])
                 print("-"*30)
                 m = 0
-                while m<len(sunday):
-                    if sunday[m][0] != satu[-1][0] and sunday[m][0] != satu[-1][1] and sunday[m][1] != satu[-1][0] and sunday[m][1] != satu[-1][1] and sunday[m][0] != satu[-2][0] and sunday[m][0] != satu[-2][1] and sunday[m][1] != sun[-1][0] and sunday[m][1] != sun[-1][1]:
-                        print("Team A VS TeamB",sunday[m][0]," VS ",sunday[m][1])
-                        print("Ground ",sunday[m][2])
+                while m<len(final_match):
+                    if final_match[m][0] != satu[-1][0] and final_match[m][0] != satu[-1][1] and final_match[m][1] != satu[-1][0] and final_match[m][1] != satu[-1][1] and final_match[m][0] != satu[-2][0] and final_match[m][0] != satu[-2][1] and final_match[m][1] != sun[-1][0] and final_match[m][1] != sun[-1][1]:
+                        print("Team A VS TeamB",final_match[m][0]," VS ",final_match[m][1])
+                        print("Ground ",final_match[m][2])
                         print("Time ",times[1])
-                        sun.append([sunday[m][0],sunday[m][1],sunday[m][2]])
-                        sunday.remove(sunday[m])
+                        sun.append([final_match[m][0],final_match[m][1],final_match[m][2]])
+                        final_match.remove(final_match[m])
                         break
                     m += 1
                 print("Date ",str(dates[dates_index])+"/"+str(current_month)+"/"+str(current_year))
@@ -211,32 +240,31 @@ def scoreborad():
                 index = k
                 j += 2
             if days[cur] == "Saturday":
-
                 k = 0
-                while k<len(saturday):
-                    if saturday[k][0] != fins[-1][0] and saturday[k][1] != fins[-1][1] and saturday[k][0] != fins[-1][1] and saturday[k][1] != fins[-1][0]:
-                        TeamA = saturday[k][0]
-                        TeamB = saturday[k][1]
+                while k<len(final_match):
+                    if final_match[k][0] != fins[-1][0] and final_match[k][1] != fins[-1][1] and final_match[k][0] != fins[-1][1] and final_match[k][1] != fins[-1][0]:
+                        TeamA = final_match[k][0]
+                        TeamB = final_match[k][1]
                         print("-"*30)
-                        print("Team A VS TeamB ",saturday[k][0]," VS ",saturday[k][1])
-                        print("Ground ",saturday[k][2])
+                        print("Team A VS TeamB ",final_match[k][0]," VS ",final_match[k][1])
+                        print("Ground ",final_match[k][2])
                         print("Time ",times[0])
-                        satu.append([saturday[k][0],saturday[k][1],saturday[k][2]])
-                        saturday.remove(saturday[k])
+                        satu.append([final_match[k][0],final_match[k][1],final_match[k][2]])
+                        final_match.remove(final_match[k])
                         break
                     k += 1
                 print("Date ",str(dates[dates_index])+"/"+str(current_month)+"/"+str(current_year))
                 print("Day ",days[cur])
                 print("-"*30)
                 m = 0
-                while m<len(saturday):
-                    if saturday[m][0] != fins[-1][0] and saturday[m][1] != fins[-1][1] and saturday[m][0] != satu[-1][0] and saturday[m][1] != satu[-1][1] and saturday[m][0] != fins[-1][1] and saturday[m][1] != fins[-1][0]:
+                while m<len(final_match):
+                    if final_match[m][0] != fins[-1][0] and final_match[m][1] != fins[-1][1] and final_match[m][0] != satu[-1][0] and final_match[m][1] != satu[-1][1] and final_match[m][0] != fins[-1][1] and final_match[m][1] != fins[-1][0]:
                         print("-"*30)
-                        print("Team A VS TeamB",saturday[m][0]," VS ",saturday[m][1])
-                        print("Ground ",saturday[m][2])
+                        print("Team A VS TeamB",final_match[m][0]," VS ",final_match[m][1])
+                        print("Ground ",final_match[m][2])
                         print("Time ",times[1])
-                        satu.append([saturday[m][0],saturday[m][1],saturday[m][2]])
-                        saturday.remove(saturday[m])
+                        satu.append([final_match[m][0],final_match[m][1],final_match[m][2]])
+                        final_match.remove(final_match[m])
                         break
                     m += 1
                 print("Date ",str(dates[dates_index])+"/"+str(current_month)+"/"+str(current_year))
@@ -253,15 +281,26 @@ def scoreborad():
                         if days[cur] == "Monday":
                             dates_index += 1
                         o = 0
-                        while o<len(final_match):
-                            if final_match[o][0] != sun[-1][0] and final_match[o][0] != sun[-1][1] and final_match[o][0] != sun[-2][0] and final_match[o][0] != sun[-2][1] and final_match[o][1] != sun[-1][0] and final_match[o][1] != sun[-1][1] and final_match[o][1] != sun[-2][0] and final_match[o][1] != sun[-2][1] and final_match[o][0] != fins[-1][0] and final_match[o][1] != fins[-1][1] and final_match[o][0] != fins[-1][1] and final_match[o][1] != fins[-1][0]:
-                                print("-"*30)
-                                print("Team A VS TeamB",final_match[o][0]," VS ",final_match[o][1])
-                                print("Ground ",final_match[o][2])
-                                fins.append([final_match[o][0],final_match[o][1],final_match[o][2]])
-                                final_match.remove(final_match[o])
-                                break
-                            o += 1
+                        if days[cur] == "Monday":
+                            while o<len(final_match):
+                                if final_match[o][0] != sun[-1][0] and final_match[o][0] != sun[-1][1] and final_match[o][0] != sun [-2][0] and final_match[o][0] != sun[-2][1] and final_match[o][1] != sun[-1][0] and final_match[o][1] != sun[-1][1] and final_match[o][1] != sun[-2][0] and final_match[o][1] != sun[-2][1] and final_match[o][0] != fins[-1][0] and final_match[o][1] != fins[-1][1] and final_match[o][0] != fins[-1][1] and final_match[o][1] != fins[-1][0]:
+                                    print("-"*30)
+                                    print("Team A VS TeamB",final_match[o][0]," VS ",final_match[o][1])
+                                    print("Ground ",final_match[o][2])
+                                    fins.append([final_match[o][0],final_match[o][1],final_match[o][2]])
+                                    final_match.remove(final_match[o])
+                                    break
+                                o += 1
+                        else:
+                            while o<len(final_match):
+                                if final_match[o][0] != satu[-1][0] and final_match[o][0] != satu[-1][1] and final_match[o][1] != satu[-1][1] and final_match[o][1] != satu[-1][1] and final_match[o][0] != satu[-2][0] and final_match[o][0] != satu[-2][1] and final_match[o][1] != satu[-2][0] and final_match[o][0] != satu[-2][1] and final_match[o][0] != fins[-1][0] and final_match[o][0] != fins[-1][1] and final_match[o][1] != fins[-1][1] and final_match[o][1] != fins[-1][0]:
+                                    print("-"*30)
+                                    print("Team A VS Team B",final_match[o][0],final_match[o][1])
+                                    print("Ground ",final_match[o][2])
+                                    fins.append([final_match[o][0],final_match[o][1],final_match[o][2]])
+                                    final_match.remove(final_match[o])
+                                    break
+                                o += 1
                     elif days[cur] == "Tuesday":
                         n = 0
                         while n<len(final_match):
@@ -298,8 +337,7 @@ def scoreborad():
                     print("-"*30)
                     j += 1
                 cur += 1
-            dates_index += 1
-            
+            dates_index += 1            
         except:
             j += 1
 scoreborad()
