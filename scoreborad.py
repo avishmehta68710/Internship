@@ -208,7 +208,7 @@ def scoreborad():
         if (len(final_match) == 0) or j>53:
             break
         try:
-            if dates_index>=30:
+            if dates_index>=31:
                 dates_index = 0
                 current_month += 1
 
