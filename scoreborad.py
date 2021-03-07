@@ -68,8 +68,6 @@ day1 += match1
 day1 += match1_swap
 
 
-
-
 day2 = []
 day2 += match2
 day2 += match2_swap
@@ -136,26 +134,36 @@ day5_swap = even+odd
 day5 += day5_swap
 
 
-
 day6 = []
 day6 += match6
 day6 += match6_swap
 
 day7 = []
-i = 0
-while i<len(ipl_teams):
-    if (i%2 == 0):
-        day7.append([ipl_teams[i],ipl_teams[i+1],ipl_grounds[i]])
-    i += 2
+odd = []
+even = []
+for i in range(len(match7)):
+    try:
+        if (i%2 == 0):
+            even.append(match7[i])
+        else:
+            odd.append(match7[i])
+    except:
+        pass
+day7 += even+odd
 
-j = 0
 day7_swap = []
-while j<len(ipl_teams):
-    day7_swap.append([ipl_teams[j],ipl_teams[j+1],ipl_grounds[ipl_teams.index(ipl_teams[j+1])]])
-    j += 2
+even = []
+odd = []
+for i in range(len(match7_swap)):
+    try:
+        if i%2 == 0:
+            even.append(match7_swap[i])
+        else:
+            odd.append(match7_swap[i])
+    except:
+        pass
+day7_swap = even+odd
 day7 += day7_swap
-day7 += day7
-
 
 
 final_match = []
@@ -177,6 +185,8 @@ def scoreborad():
 
     days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
     times = ["2:00","7:00"]
+        
+  
     current_day = "Monday"
     current_month = 3
     current_date = 1
@@ -195,12 +205,13 @@ def scoreborad():
     dates = list(range(1,32))
     dates_index = 0
     while True:
-        if (len(final_match) == 0):
+        if (len(final_match) == 0) or j>53:
             break
         try:
             if dates_index>=30:
                 dates_index = 0
                 current_month += 1
+
             if (current_month>12):
                 current_year += 1
                 current_month = 1
@@ -210,7 +221,7 @@ def scoreborad():
             if (days[cur] == "Sunday"):
                 k = 0
                 while k<len(final_match):
-                    if final_match[k][0] != satu[-1][0] and final_match[k][0] != satu[-1][1] and final_match[k][1] != satu[-1][0] and final_match[k][1] != satu[-1][1] and final_match[k][0] != satu[-2][0] and final_match[k][0] != satu[-2][1] and final_match[k][1] != satu[-1][0] and final_match[k][1] != satu[-1][1]:
+                    if final_match[k][0] != satu[-1][0] and final_match[k][0] != satu[-1][1] and final_match[k][1] != satu[-1][0] and final_match[k][1] != satu[-1][1] and final_match[k][0] != satu[-2][0] and final_match[k][0] != satu[-2][1] and final_match[k][1] != satu[-2][0] and final_match[k][1] != satu[-2][1]:
                         TeamA = final_match[k][0]
                         TeamB = final_match[k][1]
                         print("-"*30)
@@ -226,12 +237,14 @@ def scoreborad():
                 print("-"*30)
                 m = 0
                 while m<len(final_match):
-                    if final_match[m][0] != satu[-1][0] and final_match[m][0] != satu[-1][1] and final_match[m][1] != satu[-1][0] and final_match[m][1] != satu[-1][1] and final_match[m][0] != satu[-2][0] and final_match[m][0] != satu[-2][1] and final_match[m][1] != sun[-1][0] and final_match[m][1] != sun[-1][1]:
+                    if final_match[m][0] != satu[-1][0] and final_match[m][0] != satu[-1][1] and final_match[m][1] != satu[-1][0] and final_match[m][1] != satu[-1][1] and final_match[m][0] != satu[-2][0] and final_match[m][0] != satu[-2][1] and final_match[m][1] != sun[-1][0] and final_match[m][1] != sun[-1][1] and final_match[m][1] != satu[-2][1] and final_match[m][1] != satu[-2][0] and final_match[m][0] != sun[-1][0] and final_match[m][0] != sun[-1][1]:
+                        print("-"*30)
                         print("Team A VS TeamB",final_match[m][0]," VS ",final_match[m][1])
                         print("Ground ",final_match[m][2])
                         print("Time ",times[1])
                         sun.append([final_match[m][0],final_match[m][1],final_match[m][2]])
                         final_match.remove(final_match[m])
+                        check = True
                         break
                     m += 1
                 print("Date ",str(dates[dates_index])+"/"+str(current_month)+"/"+str(current_year))
@@ -258,7 +271,7 @@ def scoreborad():
                 print("-"*30)
                 m = 0
                 while m<len(final_match):
-                    if final_match[m][0] != fins[-1][0] and final_match[m][1] != fins[-1][1] and final_match[m][0] != satu[-1][0] and final_match[m][1] != satu[-1][1] and final_match[m][0] != fins[-1][1] and final_match[m][1] != fins[-1][0]:
+                    if final_match[m][0] != satu[-1][0] and final_match[m][1] != satu[-1][1] and final_match[m][0] != satu[-1][1] and final_match[m][1] != satu[-1][0] and final_match[m][0] != fins[-1][1] and final_match[m][1] != fins[-1][0] and final_match[m][0] != fins[-1][0] and final_match[m][1] != fins[-1][1]:
                         print("-"*30)
                         print("Team A VS TeamB",final_match[m][0]," VS ",final_match[m][1])
                         print("Ground ",final_match[m][2])
@@ -303,6 +316,8 @@ def scoreborad():
                                 o += 1
                     elif days[cur] == "Tuesday":
                         n = 0
+                        #print(fins)
+                        #print(final_match[0])
                         while n<len(final_match):
                             if final_match[n][0] != fins[-1][0] and final_match[n][1] != fins[-1][0] and final_match[n][1] != fins[-1][1] and final_match[n][0] != fins[-1][1]:
                                 print("-"*30)
@@ -337,7 +352,8 @@ def scoreborad():
                     print("-"*30)
                     j += 1
                 cur += 1
-            dates_index += 1            
+            dates_index += 1
+            
         except:
             j += 1
 scoreborad()
