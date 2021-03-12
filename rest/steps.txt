@@ -1,0 +1,9 @@
+Steps to run django project
+1-> create the folder in which you want to create django project. ex mkdir project
+2-> migrate to the created directory. ex cd project
+3-> install virtual envirnment using pip3 install virtualenv
+4-> set up a virtual envirnment using virtualenv (name of virtual environment). ex virtualenv myenv
+5-> activate the virtual environment using source myenv/bin/activate
+6-> install all the requiremnets using pip3 isntall -r requiremnets.txt
+7-> make the necessary migrations using python manage.py migrate command
+8-> to run the server use command python manage.py runserver
