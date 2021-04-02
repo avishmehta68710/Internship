@@ -21,6 +21,7 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from django.contrib import messages
 
 
 class ListUsers(APIView):
@@ -57,7 +58,7 @@ class CustomAuthToken(ObtainAuthToken):
 
 
 def index(request):
-    return render(request,'base.html')
+    return render(request,'l.html')
 
 regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 def check(email):
@@ -74,36 +75,45 @@ def checks_passwd(password1):
         return False
 
 def register(request):
+    first_name=""
+    last_name=""
+    username=""
+    password=""
     if request.method == "POST":
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        username = request.GET.get('email',"avqwertyu@gmail.com")
+        username = request.POST.get('email')
         password = request.POST.get('password')
-        password2 = request.POST.get('password2')
-        user = User.objects.create_user(username=username,first_name=first_name,last_name=last_name,password=password)
-        if password == password2 and check(username) == True and checks_passwd(password) == True:
+        if checks_passwd(password) == True and User.objects.filter(username=username).exists() == False:
+            user = User.objects.create_user(username=username,first_name=first_name,last_name=last_name,password=password)
             user.save()
+            print(first_name,last_name,username,password)
+            messages.success(request,"Welcome")
             return redirect('/')
         else:
-            return HttpResponse("Invalid Credentials")
+            # user.save(commit=False)
+            messages.info(request,"User Already Exists")
+            return redirect('register')
+            # return HttpResponse("Invalid Credentials")
     else:
-        return render(request,'register.html')
+        return render(request,'try.html')
 
 def enter_user(request):
     if request.method == "POST":
         username = request.POST['email']
         password1 = request.POST['password1']
         user = authenticate(request,username=username, password=password1)
-        if username == None or password1 == None:
-            return Response({'error':'Please provide both Username and Password'},status=HTTP_400_BAD_REQUEST)
-        if not user:
-            return Response({'error':'Invalid Credentials'},status=HTTP_400_NOT_FOUND)
+        # if username == None or password1 == None:
+        #     return Response({'error':'Please provide both Username and Password'},status=HTTP_400_BAD_REQUEST)
+        # if not user:
+        #     return Response({'error':'Invalid Credentials'},status=HTTP_400_NOT_FOUND)
         print(user)
         if user is not None:
             login(request,user)
             return redirect('/')
         else:
-            return HttpResponse("Invalid Credentials")
+            messages.info(request,"Invalid Credentials")
+            return redirect('login')
     else:
         return render(request,'registrations/login.html')
 

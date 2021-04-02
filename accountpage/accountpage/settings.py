@@ -144,3 +144,6 @@ LOGIN_REDIRECT_URL = '/'
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 # AUTHENTICATION_BACKENDS = ('backends.EmailBackend',)
+
+from django.contrib.messages import constants as message_constants
+MESSAGE_LEVEL = message_constants.DEBUG
